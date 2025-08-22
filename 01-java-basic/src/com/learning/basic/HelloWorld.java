@@ -1,3 +1,5 @@
+package com.learning.basic;
+
 /**
  * ClassName: ${NAME}
  * Package: ${PACKAGE_NAME}
