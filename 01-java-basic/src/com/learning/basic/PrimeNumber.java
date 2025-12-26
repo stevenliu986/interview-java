@@ -9,7 +9,7 @@ package com.learning.basic;
  * @Create: 5/11/2025
  */
 public class PrimeNumber {
-    public static void main(String[] args) {
+    static void main() {
         long start = System.currentTimeMillis();
         int count = 0;
         for (int i = 2; i < 10000; i++) {
