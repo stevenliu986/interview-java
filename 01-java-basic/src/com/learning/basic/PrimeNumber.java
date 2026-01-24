@@ -25,7 +25,7 @@ public class PrimeNumber {
             }
         }
         long end = System.currentTimeMillis();
-        System.out.println("质数的个数为：" + count);
+        System.out.println("一万以内质数的个数为：" + count);
         System.out.println("花费的时间为：" + (end - start));
     }
 }
