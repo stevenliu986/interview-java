@@ -81,7 +81,7 @@ class OptimizedSieve {
     // ======================
     // 主方法：测试性能
     // ======================
-    public static void main(String[] args) {
+   static void main() {
         int n = 100_000; // 可改为 1_000_000, 10_000_000 等
 
         long start = System.currentTimeMillis();
