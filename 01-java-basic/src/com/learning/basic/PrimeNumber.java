@@ -1,4 +1,5 @@
 package com.learning.basic;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
 public class PrimeNumber {
 
     // 1. 定义类级别的 Logger 实例
-    private static final Logger logger = Logger.getLogger(OptimizedSieve.class.getName());
+    private static final Logger logger = Logger.getLogger(PrimeNumber.class.getName());
 
     // 2. 添加私有构造方法，隐藏默认的公共构造方法
     // 私有构造方法：阻止外部通过 new PrimeCounter() 实例化此类
@@ -36,8 +37,8 @@ public class PrimeNumber {
             }
         }
         long end = System.currentTimeMillis();
-        logger.info("一万以内质数的个数为：" + count);
-        logger.info("花费的时间为：" + (end - start));
+        logger.log(Level.INFO, "一万以内质数的个数为：{0}", count);
+        logger.log(Level.INFO, "花费的时间为：{0}",(end - start));
     }
 }
 
@@ -120,8 +121,8 @@ class OptimizedSieve {
         int count = countPrimes(n);
         long end = System.currentTimeMillis();
 
-        logger.info("范围: 1 ~ " + n);
-        logger.info("质数个数: " + count);
-        logger.info("耗时: " + (end - start) + " 毫秒");
+        logger.log(Level.INFO, "范围: 1 ~ {0}",n);
+        logger.log(Level.INFO, "质数个数: {0}",count);
+        logger.log(Level.INFO, "耗时: {0} 毫秒",(end - start));
     }
 }
