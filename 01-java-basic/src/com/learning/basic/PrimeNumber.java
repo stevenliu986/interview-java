@@ -1,4 +1,5 @@
 package com.learning.basic;
+import java.util.logging.Logger;
 
 /**
  * ClassName: PrimeNumber
@@ -9,6 +10,16 @@ package com.learning.basic;
  * @Create: 5/11/2025
  */
 public class PrimeNumber {
+
+    // 1. 定义类级别的 Logger 实例
+    private static final Logger logger = Logger.getLogger(OptimizedSieve.class.getName());
+
+    // 2. 添加私有构造方法，隐藏默认的公共构造方法
+    // 私有构造方法：阻止外部通过 new PrimeCounter() 实例化此类
+    private PrimeNumber() {
+        // 可选：抛出异常，进一步防止通过反射实例化
+        throw new AssertionError("禁止实例化工具类 PrimeCounter");
+    }
     static void main() {
         long start = System.currentTimeMillis();
         int count = 0;
@@ -25,55 +36,76 @@ public class PrimeNumber {
             }
         }
         long end = System.currentTimeMillis();
-        System.out.println("一万以内质数的个数为：" + count);
-        System.out.println("花费的时间为：" + (end - start));
+        logger.info("一万以内质数的个数为：" + count);
+        logger.info("花费的时间为：" + (end - start));
     }
 }
 
 class OptimizedSieve {
+    // 1. 定义类级别的 Logger 实例
+    private static final Logger logger = Logger.getLogger(OptimizedSieve.class.getName());
+
+    // 2. 添加私有构造方法，隐藏默认的公共构造方法
+    // 私有构造方法：阻止外部通过 new PrimeCounter() 实例化此类
+    private OptimizedSieve() {
+        // 可选：抛出异常，进一步防止通过反射实例化
+        throw new AssertionError("禁止实例化工具类 PrimeCounter");
+    }
 
     /**
      * 返回 [1, n] 范围内的质数个数
      */
     public static int countPrimes(int n) {
-        if (n < 2) return 0;
-        if (n == 2) return 1;
+        // 基础边界条件：小于2无质数，等于2只有1个质数
+        if (n <= 2) {
+            return n == 2 ? 1 : 0;
+        }
 
-        // 初始：2 是质数，3~n 中的奇数先假设都是质数
-        // 偶数（除2外）直接视为合数，不参与筛
-        int count = 1; // 2 是质数
-
-        // isPrime[i] 表示数字 i 是否为质数（只关心奇数，但数组包含所有数以便索引）
+        // 初始化质数标记数组：默认false（合数），奇数先标记为true（候选质数）
         boolean[] isPrime = new boolean[n + 1];
+        initializeOddsAsPrime(isPrime, n);
 
-        // 初始化：标记所有奇数为 true（偶数保持 false）
+        // 筛除非质数：只处理奇数，从3开始到√n
+        sieveNonPrimes(isPrime, n);
+
+        // 统计所有质数（2 + 奇数中的质数）
+        return countPrimeNumbers(isPrime, n);
+    }
+
+    /**
+     * 初始化数组：将所有奇数标记为候选质数（true）
+     * 拆解嵌套逻辑，降低认知复杂度
+     */
+    private static void initializeOddsAsPrime(boolean[] isPrime, int n) {
         for (int i = 3; i <= n; i += 2) {
             isPrime[i] = true;
         }
+    }
 
-        // 从 3 开始，只遍历奇数
-        for (int i = 3; i * i <= n; i += 2) {
-            if (isPrime[i]) {
-                // 从 i*i 开始筛，步长为 2*i（确保只筛奇数倍）
-                // 例如 i=3: 筛 9, 15, 21, 27...（跳过 12, 18 等偶数）
-                for (long j = (long) i * i; j <= n; j += 2 * i) {
-                    if (isPrime[(int) j]) {
-                        isPrime[(int) j] = false;
-                        count--;
-                    }
+    /**
+     * 筛除非质数：从i*i开始，步长2*i（只筛奇数倍）
+     * 核心筛法逻辑独立成方法，减少嵌套
+     */
+    private static void sieveNonPrimes(boolean[] isPrime, int n) {
+        for (int i = 3; (long) i * i <= n; i += 2) {
+            if (isPrime[i]) { // 仅处理未被筛除的质数
+                for (long j = (long) i * i; j <= n; j += 2L * i) {
+                    isPrime[(int) j] = false;
                 }
             }
         }
+    }
 
-        // 补充：加上所有未被筛掉的奇质数（上面只在筛的时候减，但初始 count 未设全）
-        // 更简单的方式：重新计算 count（避免逻辑复杂）
-        // 实际上，上面“边筛边减”容易出错，我们改用更清晰的方式：
-        // —— 先不边筛边减，最后快速统计奇数中的 true
-
-        // 🔄 修正：采用更可靠的方式（清晰 > 微优化）
-        count = 1; // 2
+    /**
+     * 统计质数总数：2是唯一的偶质数 + 奇数中的质数
+     * 独立统计逻辑，避免边筛边改count的混乱
+     */
+    private static int countPrimeNumbers(boolean[] isPrime, int n) {
+        int count = 1; // 先计入2这个质数
         for (int i = 3; i <= n; i += 2) {
-            if (isPrime[i]) count++;
+            if (isPrime[i]) {
+                count++;
+            }
         }
         return count;
     }
@@ -88,8 +120,8 @@ class OptimizedSieve {
         int count = countPrimes(n);
         long end = System.currentTimeMillis();
 
-        System.out.println("范围: 1 ~ " + n);
-        System.out.println("质数个数: " + count);
-        System.out.println("耗时: " + (end - start) + " 毫秒");
+        logger.info("范围: 1 ~ " + n);
+        logger.info("质数个数: " + count);
+        logger.info("耗时: " + (end - start) + " 毫秒");
     }
 }
