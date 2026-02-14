@@ -16,10 +16,10 @@ public class PrimeNumber {
     private static final Logger logger = Logger.getLogger(PrimeNumber.class.getName());
 
     // 2. 添加私有构造方法，隐藏默认的公共构造方法
-    // 私有构造方法：阻止外部通过 new PrimeCounter() 实例化此类
+    // 私有构造方法：阻止外部通过 new PrimeNumber() 实例化此类
     private PrimeNumber() {
         // 可选：抛出异常，进一步防止通过反射实例化
-        throw new AssertionError("禁止实例化工具类 PrimeCounter");
+        throw new AssertionError("禁止实例化工具类 PrimeNumber");
     }
     static void main() {
         long start = System.currentTimeMillis();
@@ -47,10 +47,10 @@ class OptimizedSieve {
     private static final Logger logger = Logger.getLogger(OptimizedSieve.class.getName());
 
     // 2. 添加私有构造方法，隐藏默认的公共构造方法
-    // 私有构造方法：阻止外部通过 new PrimeCounter() 实例化此类
+    // 私有构造方法：阻止外部通过 new OptimizedSieve() 实例化此类
     private OptimizedSieve() {
         // 可选：抛出异常，进一步防止通过反射实例化
-        throw new AssertionError("禁止实例化工具类 PrimeCounter");
+        throw new AssertionError("禁止实例化工具类 OptimizedSieve");
     }
 
     /**
