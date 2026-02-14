@@ -10,8 +10,17 @@ package com.learning.basic;
  */
 public class Basic01Exercise {
 
-    // 打印一个菱形，此方法适用于Java11及以上版本
     static void main() {
+        DiamondPattern diamondPattern = new DiamondPattern();
+        diamondPattern.printDiamondPattern11();
+        System.out.println("++++++++++++++++");
+        diamondPattern.printDiamondPattern();
+    }
+}
+
+class DiamondPattern {
+    // 打印一个菱形，此方法适用于Java11及以上版本
+    void printDiamondPattern11(){
         for (int i = 1; i <= 4; i++) {
             System.out.println(" ".repeat(4 - i) + "*".repeat(2 * i - 1));
         }
@@ -20,7 +29,7 @@ public class Basic01Exercise {
         }
     }
 
-    // 另一种方法
+    // 另一种方法，此方法适用于Java8版本
     void printDiamondPattern(){
         int n = 4; // 菱形上半部分的高度（包括中间行）
 
