@@ -34,6 +34,12 @@ public class BasicExercise02 {
 
     // 打印出从startNum-endNum内的所有奇数，但跳过以3结尾的数
     void printOddNumber(int startNum, int endNum){
+        // 参数验证
+        if (startNum > endNum) {
+            System.out.println("起始值不能大于结束值");
+            return;
+        }
+
         for (int i = (startNum % 2 == 0)? startNum + 1:startNum; i <= endNum; i += 2) {
             if ( i % 10 != 3) {
                 System.out.println(i);
