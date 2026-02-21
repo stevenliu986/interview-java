@@ -1,5 +1,7 @@
 package com.learning.basic;
 
+import java.util.Scanner;
+
 /**
  * ClassName: Basic01Exercise
  * Package: com.learning.basic
@@ -15,6 +17,21 @@ public class Basic01Exercise {
         diamondPattern.printDiamondPattern11();
         System.out.println("++++++++++++++++");
         diamondPattern.printDiamondPattern();
+
+        Scanner s = new Scanner(System.in);
+        System.out.print("整数：" );
+        int num = s.nextInt();
+        System.out.println(num);
+        System.out.print("浮点数：");
+        double num1 = s.nextDouble();
+        System.out.println(num1);
+        System.out.print("请输入你的姓名：");
+
+        // 这里有个坑，需要先执行一次s.nextLine()来消耗掉上一个输出遗留的\n
+        s.nextLine();
+        String name  = s.nextLine();
+        System.out.println("你的姓名是：" + name);
+
     }
 }
 
