@@ -31,7 +31,6 @@ public class Basic01Exercise {
         s.nextLine();
         String name  = s.nextLine();
         System.out.println("你的姓名是：" + name);
-
     }
 }
 
