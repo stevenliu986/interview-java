@@ -1,4 +1,4 @@
-package com.learning.basic.oop;
+package com.learning.basic.oop01;
 
 /**
  * ClassName: Vehicle
